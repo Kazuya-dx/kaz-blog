@@ -1,17 +1,16 @@
-import clsx from "clsx";
-import * as React from "react";
+import clsx from 'clsx';
+import * as React from 'react';
 
 const variants = {
-  primary:
-    "text-gray-600 border border-gray-200 hover:text-black hover:border-black",
-  secondary: "text-gray-600 hover:bg-gray-200 hover:text-black",
-  tertiary: "text-gray-600 hover:text-black",
+  primary: 'text-gray-600 border border-gray-200 hover:text-black hover:border-black',
+  secondary: 'text-gray-600 hover:bg-gray-200 hover:text-black',
+  tertiary: 'text-gray-600 hover:text-black',
 };
 
 const sizes = {
-  sm: "py-1 px-2 text-sm font-light",
-  md: "py-1 px-3 text-md font-normal",
-  lg: "py-1 px-3 text-lg",
+  sm: 'py-1 px-2 text-sm font-light',
+  md: 'py-1 px-3 text-md font-normal',
+  lg: 'py-1 px-3 text-lg',
 };
 
 type IconProps =
@@ -28,10 +27,10 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      type = "button",
-      className = "",
-      variant = "primary",
-      size = "md",
+      type = 'button',
+      className = '',
+      variant = 'primary',
+      size = 'md',
       isLoading = false,
       startIcon,
       endIcon,
@@ -44,7 +43,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
         className={clsx(
-          "flex justify-center items-center duration-200 disabled:cursor-not-allowed rounded-md focus:outline-none",
+          'flex justify-center items-center duration-200 disabled:cursor-not-allowed rounded-md',
           variants[variant],
           sizes[size],
           className
@@ -59,4 +58,4 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-Button.displayName = "Button";
+Button.displayName = 'Button';
