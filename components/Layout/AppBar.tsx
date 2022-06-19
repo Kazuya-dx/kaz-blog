@@ -4,7 +4,7 @@ import { Button } from '../Elements';
 
 export const AppBar = () => {
   return (
-    <div className="flex justify-center">
+    <div className="sticky top-0 flex justify-center bg-white">
       <div className="flex justify-between items-center max-w-6xl w-full px-8 h-12">
         <h1 className="text-xl font-black">
           <Link href="/">
