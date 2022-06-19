@@ -10,7 +10,12 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.6.4",
+    "@tailwindcss/typography": "^0.5.2",
+    "@types/markdown-it": "^12.2.3",
     "clsx": "^1.1.1",
+    "fs": "^0.0.1-security",
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^13.0.1",
     "next": "12.1.6",
     "react": "18.1.0",
     "react-dom": "18.1.0"
