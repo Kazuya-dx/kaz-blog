@@ -1,5 +1,5 @@
 ---
-title: 'Test1'
+title: 'Test2'
 category: 'example'
 date: '2022-03-13'
 bannerImage: '/banner/banner-1.jpg'
