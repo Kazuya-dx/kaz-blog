@@ -16,7 +16,7 @@ type Params = ParsedUrlQuery & {
   slug: string;
 };
 
-export default function Post({ frontmatter, content }: BlogProps) {
+export const Post = ({ frontmatter, content }: BlogProps) => {
   const { title, category, date, bannerImage, tags } = frontmatter;
 
   return (
@@ -32,9 +32,9 @@ export default function Post({ frontmatter, content }: BlogProps) {
       </article>
     </>
   );
-}
+};
 
-export async function getStaticPaths() {
+export const getStaticPaths = async () => {
   const files = fs.readdirSync('posts');
   const paths = files.map((fileName) => ({
     params: {
@@ -45,7 +45,7 @@ export async function getStaticPaths() {
     paths,
     fallback: false,
   };
-}
+};
 
 export const getStaticProps: GetStaticProps<BlogProps, Params> = ({ params }) => {
   const fileName = fs.readFileSync(`posts/${params?.slug}.md`, 'utf-8');
@@ -57,3 +57,5 @@ export const getStaticProps: GetStaticProps<BlogProps, Params> = ({ params }) =>
     },
   };
 };
+
+export default Post;
