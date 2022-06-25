@@ -1,11 +1,22 @@
+import { GetStaticProps } from 'next';
+import { ParsedUrlQuery } from 'node:querystring';
 import Image from 'next/image';
 import fs from 'fs';
 import matter from 'gray-matter';
 import md from 'markdown-it';
 
-// TODO: any 削除
-// TODO: features にコンポーネントを寄せる
-export default function Post({ frontmatter, content }: any) {
+type BlogProps = {
+  frontmatter: {
+    [key: string]: any;
+  };
+  content: string;
+};
+
+type Params = ParsedUrlQuery & {
+  slug: string;
+};
+
+export default function Post({ frontmatter, content }: BlogProps) {
   const { title, category, date, bannerImage, tags } = frontmatter;
 
   return (
@@ -36,9 +47,8 @@ export async function getStaticPaths() {
   };
 }
 
-// TODO: any 削除
-export async function getStaticProps({ params: { slug } }: any) {
-  const fileName = fs.readFileSync(`posts/${slug}.md`, 'utf-8');
+export const getStaticProps: GetStaticProps<BlogProps, Params> = ({ params }) => {
+  const fileName = fs.readFileSync(`posts/${params?.slug}.md`, 'utf-8');
   const { data: frontmatter, content } = matter(fileName);
   return {
     props: {
@@ -46,4 +56,4 @@ export async function getStaticProps({ params: { slug } }: any) {
       content,
     },
   };
-}
+};
