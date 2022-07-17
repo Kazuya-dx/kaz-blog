@@ -1,29 +1,63 @@
+import { GetStaticProps } from 'next';
+import { ParsedUrlQuery } from 'node:querystring';
 import Image from 'next/image';
 import fs from 'fs';
 import matter from 'gray-matter';
 import md from 'markdown-it';
 
-// TODO: any 削除
-// TODO: features にコンポーネントを寄せる
-export default function Post({ frontmatter, content }: any) {
-  const { title, category, date, bannerImage, tags } = frontmatter;
+type BlogProps = {
+  frontmatter: {
+    [key: string]: any;
+  };
+  content: string;
+};
+
+type Params = ParsedUrlQuery & {
+  slug: string;
+};
+
+export const Post = ({ frontmatter, content }: BlogProps) => {
+  const { title, categories, date, imagePath } = frontmatter;
 
   return (
-    <>
-      <Image alt={title} src={bannerImage} height={300} width={400} />
-      <h1 className="text-7xl font-black">{title}</h1>
-      <h2>{date}</h2>
-      <h3>
-        {category} || {tags.join()}
-      </h3>
-      <article className="prose lg:prose-xl">
+    <div className="max-w-3xl mx-auto">
+      <div className="flex justify-center">
+        <div className="relative w-80 h-80">
+          <Image
+            alt={title}
+            src={imagePath}
+            layout="fill"
+            objectFit="contain"
+            className="rounded-full"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col w-full my-8">
+        <h1 className="text-3xl font-black text-center mb-2">{title}</h1>
+        <p className="text-center mb-2">{date}</p>
+        <div className="flex justify-center">
+          {categories.map((category: string) => (
+            <div
+              key={category}
+              className="mx-1 bg-black text-white px-2 py-1 rounded-md cursor-pointer"
+            >
+              {category}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <article className="prose prose-h2:text-2xl prose-h2:font-semibold prose-p:text-base prose-p:leading-7 prose-p:mb-20">
         <div dangerouslySetInnerHTML={{ __html: md().render(content) }} />
       </article>
-    </>
-  );
-}
 
-export async function getStaticPaths() {
+      <div className="h-80">profile</div>
+    </div>
+  );
+};
+
+export const getStaticPaths = async () => {
   const files = fs.readdirSync('posts');
   const paths = files.map((fileName) => ({
     params: {
@@ -34,11 +68,10 @@ export async function getStaticPaths() {
     paths,
     fallback: false,
   };
-}
+};
 
-// TODO: any 削除
-export async function getStaticProps({ params: { slug } }: any) {
-  const fileName = fs.readFileSync(`posts/${slug}.md`, 'utf-8');
+export const getStaticProps: GetStaticProps<BlogProps, Params> = ({ params }) => {
+  const fileName = fs.readFileSync(`posts/${params?.slug}.md`, 'utf-8');
   const { data: frontmatter, content } = matter(fileName);
   return {
     props: {
@@ -46,4 +79,6 @@ export async function getStaticProps({ params: { slug } }: any) {
       content,
     },
   };
-}
+};
+
+export default Post;
