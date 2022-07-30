@@ -25,23 +25,25 @@ const Home: NextPage<HomeProps> = ({ posts }) => {
           <BsTwitter size={24} color="#333" className="mx-1 cursor-pointer" />
         </div>
       </div>
-      <h1 className="text-2xl font-black my-4">最近の投稿</h1>
+      <h1 className="text-4xl font-black my-8">最近の投稿</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
-        {posts?.map((post) => {
-          const { slug, frontmatter } = post;
-          const { title, categories, date, imagePath, tags } = frontmatter;
+        {posts
+          ?.sort((a, b) => (a.frontmatter.date < b.frontmatter.date ? 1 : -1))
+          .map((post) => {
+            const { slug, frontmatter } = post;
+            const { title, categories, date, imagePath, tags } = frontmatter;
 
-          return (
-            <PostCard
-              key={slug}
-              slug={slug}
-              title={title}
-              imagePath={imagePath}
-              categories={categories}
-              createdAt={date}
-            />
-          );
-        })}
+            return (
+              <PostCard
+                key={slug}
+                slug={slug}
+                title={title}
+                imagePath={imagePath}
+                categories={categories}
+                createdAt={date}
+              />
+            );
+          })}
       </div>
     </>
   );

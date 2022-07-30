@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import { GetStaticProps } from 'next';
 import fs from 'fs';
 import matter from 'gray-matter';
-import { PostCardList } from '../../features/blog/components';
+import { PostCard } from '../../components/Elements/PostCard';
 
 type BlogPageProps = {
   posts: {
@@ -16,11 +16,27 @@ type BlogPageProps = {
 export const Blog: NextPage<BlogPageProps> = ({ posts }) => {
   return (
     <>
-      <h1 className="text-4xl font-black mt-8 text-transparent bg-clip-text bg-gradient-to-r bg-conic-to-tl from-rose-500 to-indigo-700">
-        Posts
-      </h1>
-      <h2 className="text-gray-600 mb-8">テック・デザイン・ガジェット系の記事一覧を表示します</h2>
-      <PostCardList posts={posts} />
+      <h1 className="text-5xl font-black my-8">Blog</h1>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
+        {posts
+          ?.sort((a, b) => (a.frontmatter.date < b.frontmatter.date ? 1 : -1))
+          .map((post) => {
+            const { slug, frontmatter } = post;
+            const { title, categories, date, imagePath, tags } = frontmatter;
+
+            return (
+              <PostCard
+                key={slug}
+                slug={slug}
+                title={title}
+                imagePath={imagePath}
+                categories={categories}
+                createdAt={date}
+              />
+            );
+          })}
+      </div>
     </>
   );
 };
