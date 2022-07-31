@@ -1,4 +1,5 @@
 import { AppBar } from './AppBar';
+import { Footer } from './Footer';
 
 type MainLayoutProps = {
   children: React.ReactNode;
@@ -11,6 +12,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
       <main className="flex justify-center">
         <div className="max-w-6xl w-full px-8 h-screen bg-white">{children}</div>
       </main>
+      <Footer />
     </>
   );
 };

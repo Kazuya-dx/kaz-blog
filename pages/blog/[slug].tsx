@@ -52,7 +52,10 @@ export const Post = ({ frontmatter, content }: BlogProps) => {
         <div dangerouslySetInnerHTML={{ __html: md().render(content) }} />
       </article>
 
-      <div className="h-80">profile</div>
+      <div className="flex flex-col items-center justify-center w-full my-8 pb-8">
+        <div className="w-32 h-32 bg-gradient-to-tl from-pink-300 via-purple-300 to-indigo-400 rounded-full mb-4" />
+        <p className="text-xl font-black mb-2">Kaz</p>
+      </div>
     </div>
   );
 };
